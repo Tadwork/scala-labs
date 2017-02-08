@@ -32,8 +32,53 @@ object CollectionExercise01 {
    * Case 3: so it is okay if you want to just give up
    *
    */
+
+  //      char match {
+  //      case 'a' => 'y'
+  //      case 'b' => 'h'
+  //      case 'c' => 'e'
+  //      case 'd' => 's'
+  //      case 'e' => 'o'
+  //      case 'f' => 'c'
+  //      case 'g' => 'v'
+  //      case 'h' => 'x'
+  //      case 'i' => 'd'
+  //      case 'j' => 'u'
+  //      case 'k' => 'i'
+  //      case 'l' => 'g'
+  //      case 'm' => 'l'
+  //      case 'n' => 'b'
+  //      case 'o' => 'k'
+  //      case 'p' => 'r'
+  ////      case 'q' => 's'
+  //      case 'r' => 't'
+  //      case 's' => 'n'
+  //      case 't' => 'w'
+  //      case 'u' => 'j'
+  //      case 'v' => 'p'
+  //      case 'w' => 'f'
+  //      case 'x' => 'm'
+  //      case 'y' => 'a'
+  ////      case 'z' => 's'
+  //      case ' ' => ' '
+  //      case _ => '*'
+  //    }
   def googleCodeJamGooglerese(lines: String*): Seq[String] = {
-    error("fix me")
+    val in1 = "ejp mysljylc kd kxveddknmc re jsicpdrysi"
+    val in2 = "rbcpc ypc rtcsra dkh wyfrepkym veddknkmkrkcd"
+    val in3 = "de kr kd eoya kw aej tysr re ujdr lkgc jv"
+    val input = Array(in1,in2,in3)
+    val out1 = "our language is impossible to understand"
+    val out2 = "there are twenty six factorial possibilities"
+    val out3 = "so it is okay if you want to just give up"
+    val output = Array(out1,out2,out3)
+
+    def toSingleString = (f:String,s:String)=>f concat s
+
+    val inputLine = input reduce toSingleString
+    val outputLine = output reduce toSingleString
+    def inputToOutput = (char:Char) => outputLine(inputLine indexOf char)
+    lines map( l => l map inputToOutput)
   }
 }
 /*========================================================== */
@@ -50,7 +95,13 @@ object CollectionExercise02 {
    * using a functional approach.
    */
   def groupAdultsPerAgeGroup(persons: Seq[Person]): Map[Int, Seq[Person]] = {
-    error("fix me")
+    def age = (p:Person)=>(p.age / 10) * 10
+    def name = (p:Person) =>p.name
+    def lessThan20 = (p:Person)=>p.age < 20
+    val grouped = persons sortBy age filterNot lessThan20 groupBy age
+    grouped map(
+      group => (group._1, group._2 sortBy name )
+      )
   }
 }
 
@@ -64,8 +115,13 @@ object CollectionExercise03 {
    * checkValuesIncrease(Seq(1,2,3)) == true
    * checkValuesIncrease(Seq(1,2,2)) == false
    */
-  def checkValuesIncrease[T <% Ordered[T]](seq: Seq[T]): Boolean =
-    error("fix me")
+  def checkValuesIncrease[T <% Ordered[T]](seq: Seq[T]): Boolean = {
+    val first :: rest = seq
+    rest.foldLeft(true -> first){
+      (last:(Boolean,T),next:T)=> (if(last._1 == false) false else (next > last._2),next)
+    }._1
+  }
+
 
 }
 /*========================================================== */
