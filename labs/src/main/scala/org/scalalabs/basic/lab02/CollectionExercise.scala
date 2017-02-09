@@ -132,7 +132,9 @@ object CollectionExercise04 {
    * To keep it simple it's ok to use String.split to extract all words of a sentence.
    */
   def calcLengthLongestWord(lines: String*): Int = {
-    error("fix me")
+    lines.flatMap(a=>a.split(" ")).foldLeft(0){
+      (last:(Int),next:String)=> if(next.length > last) next.length else last
+    }
   }
 }
 
@@ -144,7 +146,9 @@ object CollectionExercise05 {
    * E.g. Seq(1,2,3) is Seq(2)
    */
   def filterWithFoldLeft(seq: Seq[Int]): Seq[Int] = {
-    error("fix me")
+    seq.foldLeft(List[Int]()){
+      (filtered,item)=> if( item % 2 == 0 ) filtered :+ item else filtered
+    }
   }
 
   /**
@@ -153,7 +157,13 @@ object CollectionExercise05 {
    * E.g: Seq(1,2,3) is Map(true -> Seq(2), false -> Seq(1,3))
    */
   def groupByWithFoldLeft(seq: Seq[Int]): Map[Boolean, Seq[Int]] = {
-    error("fix me")
+    seq.foldLeft(Map[Boolean,List[Int]]()){
+      (grouped,item)=> {
+        val group = item % 2 == 0
+        val values = if(grouped.contains(group)) grouped(group) :+ item else List(item)
+        grouped + (group -> values)
+      }
+    }
   }
 }
 
